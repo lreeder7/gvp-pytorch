@@ -206,7 +206,32 @@ class ProteinGraphDataset(data.Dataset):
         u_0 = U[2:]
 
         # Backbone normals
-        n_2 = _normalize(torch.cross(u_2, u_1), dim=-1)
+        # need to provide dim to torch.cross now, default dim is first dim with size 3
+        dim=-1
+        for i,s in enumerate(u_2.shape):
+            if s == 3:
+                dim = i
+                break
+
+        if dim == -1:
+            for i,s in enumerate(u_1.shape):
+                if s == 3:
+                    dim=i
+                    break 
+        
+        n_2 = _normalize(torch.cross(u_2, u_1,dim=dim), dim=-1)
+
+        dim=-1
+        for i,s in enumerate(u_1.shape):
+            if s == 3:
+                dim = i
+                break
+
+        if dim == -1:
+            for i,s in enumerate(u_0.shape):
+                if s == 3:
+                    dim=i
+                    break 
         n_1 = _normalize(torch.cross(u_1, u_0), dim=-1)
 
         # Angle between normals
