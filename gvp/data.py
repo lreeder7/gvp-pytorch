@@ -219,7 +219,7 @@ class ProteinGraphDataset(data.Dataset):
                     dim=i
                     break 
         
-        n_2 = _normalize(torch.cross(u_2, u_1,dim=dim), dim=-1)
+        n_2 = _normalize(torch.cross(u_2, u_1, dim=dim), dim=-1)
 
         dim=-1
         for i,s in enumerate(u_1.shape):
@@ -232,7 +232,7 @@ class ProteinGraphDataset(data.Dataset):
                 if s == 3:
                     dim=i
                     break 
-        n_1 = _normalize(torch.cross(u_1, u_0), dim=-1)
+        n_1 = _normalize(torch.cross(u_1, u_0, dim=dim), dim=-1)
 
         # Angle between normals
         cosD = torch.sum(n_2 * n_1, -1)
